@@ -1,0 +1,47 @@
+//This Program creates a file and prints 150 prime numbers
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+bool Find_Prime(int);//This is a flag if the number is a prime or not
+
+
+int main()
+{
+	int prime = 2;//prime numbers must not be less tha 1 so it starts of at two.
+	int count = 1;//counts the number of primes
+
+	ofstream outfile;
+	outfile.open("Prime_NW.dat");
+	while (count <= 150)
+	{
+
+		if (Find_Prime(prime))//If the number is a prime number then print in the file the prime number and its counting position
+		{
+			outfile << count << ".) --> " << prime << endl;//Ex: 1.) --> 2
+			count++;
+		}
+		prime++;//The number will keep counting till the loop finish counting to 150 in prime numbers.
+	}
+	outfile.close();
+
+	cout << "All 150 primes are saved into a file." << endl;//indicator that it;s in a file (-_-) 
+
+	system("pause");
+	return 0;
+}
+
+bool Find_Prime(int P)
+{
+	bool confirm = true;//The function is assignrd to true
+	if (P == 2)//since 2 is the only even prime number the function returns true if the number is equal to 2
+		return true;
+	for (int i = P - 1; i > 1; i--)//This takes the number and counts down until module = 0.
+	{							   //Ex: P=3; i = p - 1; if P % 1==0 then confirm is now false and will return false.
+		if (P % i == 0)
+			confirm = false;
+	}
+
+	return confirm;
+}
