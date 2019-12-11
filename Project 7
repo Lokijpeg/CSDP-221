@@ -1,0 +1,109 @@
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+float Avg(int[], int, int);
+int FindLowest(int[], int);
+void BubbleSort(int[], int);
+void PrintInfo(int[], float/*Avg*/, int/*lowest*/, int/*Size*/);
+int main()
+{
+	ifstream infile;
+	int count = 0, lowest, value;
+	float avg;
+
+	infile.open("Prob_6_grades.dat");
+	if (!infile)
+	{
+		cerr << "Error Can't find file."<<endl;
+		cout << "closing out application." << endl;
+		return 0;
+	}
+	while (infile)
+	{
+		infile >> value;
+		count++;
+	}
+	infile.close();
+
+	infile.open("Prob_6_grades.dat");
+	int *grades = new int[count];
+	for(int i=0; i <count+1; i++)
+	{
+		infile >> value;
+		*(grades + i) = value;
+		if (value < 0)
+		{
+			cerr << "File error. Grade contain negaitive integer" << endl;
+			delete[] grades;
+			system("pause");
+			return 0;
+		}
+	}
+	infile.close();
+
+	BubbleSort(grades, count);
+	lowest = FindLowest(grades, count);
+	avg = Avg(grades, count, lowest);
+	PrintInfo(grades, avg, lowest, count);
+	
+	
+	delete[] grades;
+	system("pause");
+	return 0;
+}
+float Avg(int Grades[], int Count, int lowest)
+{
+	float Total = 0.0;
+	for (int i = 0; i < Count+1; i++)
+	{
+		if (!(*(Grades+i) == lowest))
+		{
+			Total += *(Grades + i);
+		}
+		else
+			continue;
+	}
+	Total /= Count;
+	return Total;
+}
+int FindLowest(int G[], int c)
+{
+	int low = *(G);
+	for (int i = 0; i < c+1 ;i++)
+	{
+		if (*(G+i) < low)
+		{
+			low = G[i];
+		}
+	}
+	return low;
+}
+void BubbleSort(int Grade[], int C)
+{
+	bool swap;
+	int temp;
+	do
+	{
+		swap = false;
+		for(int a=0;a<C+1;a++)
+		{
+			if (*(Grade+a) > *(Grade + (a + 1)))
+			{
+				temp = *(Grade + a);
+				*(Grade+a) = *(Grade+(a+1));
+				*(Grade+(a+1)) = temp;
+				swap = true;
+			}
+		}
+	} while (swap);
+}
+void PrintInfo(int Gr[], float Avg, int lowest, int Size)
+{
+	for (int i = 0; i < Size+1; i++)
+	{
+		cout << *(Gr + i) << endl;
+	}
+	cout << "Lowest: " << lowest<<endl;
+	cout << "Average: " << Avg << endl;
+}
