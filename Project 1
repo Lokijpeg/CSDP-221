@@ -1,0 +1,21 @@
+/*This program will convert seconds to individual hours, minutes, and seconds.
+**The user will input the number of seconds and the numbers will be converted**
+*/
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int SecU, SecT, MinT, HrT;// "This is the variable for the following code." - O u O
+
+	cout << "Enter the numbers the seconds." << endl;
+	cout << "Seconds: ";
+	cin >> SecU;//seconds input
+
+	HrT = SecU / 3600;//"HrT will convert the user seconds into hrs which is simple and standard." - ._.
+
+	MinT = (SecU - (3600 * HrT)) / 60;//"MinT will convert the user seconds into minutes. which can be complicated"-  o v o
+
+	SecT = (SecU - (3600 * HrT) - (MinT * 60));//"SecT will convert the user seconds into seconds is very confusing." - @ o @
+
+	cout << "The number of seconds you've entered is " << HrT << " Hours, " << MinT << " Minutes and " << SecT << " Seconds.";//display the results :]
