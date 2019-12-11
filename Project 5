@@ -1,0 +1,113 @@
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+void printInfo(int, int, int);//Function prints the info that has been inserted and calculated
+void graphInfo(int [][7]);//For show and organization, I want to draw a chart that shows the number of food for each elephant per day
+int Greatest(int[][7]);//Find and return the greatest value
+int Least(int[][7]);//Find and return the smallest value
+int Average(int, int);//Calculates the average of meals peer day for each elephant.
+int main()
+{
+	int Avg, least=10, greatest = 10;//initialized Average and least to default. but greatest set to 0 for a accurate comparison
+	int total = 0, count=0;//set total and count to 0 for total sums up the weeks for each elephant and count the food throughout the week.
+	const int ELEPHANT = 3, WEEKS = 7;//we have 3 elephants and we are feeding them for 3 weeks.
+	int schedule[3][7];//This is our 3 x 7 2D array on feeding elephants per day
+
+	for (int i = 0; i < WEEKS; i++)//update the days
+	{
+		for (int j = 0; j < ELEPHANT; j++)//update the elephants 
+		{
+			switch (j)
+			{
+			case 0://If this is elephant number one then its Rollo
+				cout << "Enter amount of food you feed Rollo week " << (i + 1) << endl;
+				break;
+			case 1://If it's number two then its Bessie
+				cout << "Enter amount of food you feed Bessie week " << (i + 1) << endl;
+				break;
+			case 2://if number three the its Gertrude
+				cout << "Enter amount of food you feed Gertrude week " << (i + 1) << endl;
+				break;
+			}
+			cout << "Number of food: ";
+			cin >> schedule[j][i];//input the number of food
+			while (schedule[j][i] < 0)//If the number is not positive then its an error and retype the number of food
+			{
+				cout << "Invalid Number: must be positive. Enter again." << endl;
+				cout << "Number of food: ";
+				cin >> schedule[j][i];
+			}
+			total += schedule[j][i];
+			count++;
+			Avg = Average(total, count);//calculate the average of the total of food per day
+		
+			
+		}
+	}
+	greatest = Greatest(schedule);
+	least = Least(schedule);
+	graphInfo(schedule);//calling graph 
+	printInfo(Avg, least, greatest);//calling print info
+
+	system("pause");
+	return 0;
+}
+
+void printInfo(int AVG, int L, int G)
+{
+	cout << "Average of feed per day: " << AVG << endl;
+	cout << "Largest amount of feed during the week: " << G << endl;
+	cout << "Smallest amount of feed during the week: " << L << endl;
+}
+
+int Average(int t, int c)//calculate the average
+{
+	return t / c;
+}
+int Greatest(int sch[][7])//Find and return greatest value
+{
+	int G = sch[0][0];
+	for (int y = 0; y < 7; y++)
+	{
+		for (int x = 0; x < 3; x++)
+		{
+			if (sch[x][y] > G)
+			{
+				G = sch[x][y];
+			}
+		}
+	}
+
+	return g;
+}
+int Least(int sch[][7])//Find and return least value
+{
+	int L = sch[0][0];
+	for (int y = 0; y < 7; y++)
+	{
+		for (int x = 0; x < 3; x++)
+		{
+			if (sch[x][y] < L)
+			{
+				L = sch[x][y];
+			}
+		}
+	}
+	return L;
+}
+void graphInfo(int S[][7])//Draws a chart
+{
+	cout << "______________________________________________" << endl;
+	cout << "| Names |  Rollo   |   Bessie   |   Gertrude |" << endl;
+	for (int y = 0; y < 7; y++)
+	{			
+		cout << "| Week" << (y + 1)<<" ";
+		for (int x = 0; x < 3; x++)
+		{	
+			cout << "|" << S[x][y] << "| ";
+		}
+		cout << endl;
+		cout << "|__________________________________________|" << endl;
+	}
+}
