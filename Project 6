@@ -1,0 +1,115 @@
+#include <iostream>
+#include <fstream>
+#include <ctime>
+using namespace std;
+
+void SectionArray(int [], int);//Algorithm of selection sort
+void BubbleArray(int [], int);//Algrithm of Bubble sort
+void showArray(int [], int, ofstream&);//fuction that prints array
+
+
+int main()
+{
+	ofstream outfile;
+	ifstream infile;
+	clock_t T;//set clock_t variable
+	const int Size = 1000;//initialize the size
+	int value[Size];//Original values that has been extracted from file
+	int valueA[Size];//Array that will be bubble sorted
+	int valueB[Size];//Array that will be selection sorted
+	int index = 0;
+	T = clock();//set T to clock function
+	infile.open("RandomNumdata.dat");//Open the file we are going to extract
+	if (!infile)//check if file exist; if not, the call an error and exit the program 
+	{
+		cerr << "Error can't read file";
+		return 0;
+	}
+
+	for (index; index < Size; index++)//the content of the file will be placed in an array
+	{
+		infile >> value[index];
+		valueA[index] = value[index];//array of valueA will have the same conents as origional array of value
+		valueB[index] = value[index];//same rule appies here
+	}
+	infile.close();//close input file
+
+//----------------------------------------------------------------------------------------------------------//
+	//This part sorts the array by bubble sort and time how many seconds it take to sort by bubble.
+
+	outfile.open("Bubble_NW.dat");//create a new file for the array to place sorted numbers *by bubble*
+
+	BubbleArray(valueA, Size);//bubble sort algorithm
+
+	outfile << "The values are now sorted in bubble sort: ";
+	showArray(valueA, Size, outfile);//print the values to outfiles
+
+	T = clock() - T;//Set time to function click minus T
+	outfile << "After sorting the array in bubble sort, it took " << (float)T / CLOCKS_PER_SEC<<"\n"<<endl;//print the how long it took for for file
+	outfile.close();
+//-------------------------------------------------------------------------------------------------//
+	//Steps in part 1 are repeated here but two changes.
+	outfile.open("Selection_NW.dat");//creates file selection for values sorted by selections
+
+	SectionArray(valueB, Size);//selection array  algorithm
+
+	outfile << "The value are now sorted in section sort: ";
+	showArray(valueB, Size, outfile);//print sorted arrays
+
+	T = clock() - T;//same rules apply for line 60 and 61
+	outfile << "After sorting the array in section sort, it took " << (float)T / CLOCKS_PER_SEC << endl;
+	outfile.close();
+
+	cout << "Output complete.";//confirms everything went through properly
+
+	system("pause");
+	return 0;
+}
+
+void BubbleArray(int array[], int SIZE)
+{
+	bool swap;
+	int temp;
+
+	do
+	{
+		swap = false;
+		for (int count = 0; count < SIZE - 1; count++)//counting from 0 to Size
+		{
+			if (array[count] > array[count + 1])//if array of is greater than array right next to it
+			{
+				temp = array[count];//temp will hold the current array 
+				array[count] = array[count + 1];//the next array becomes the current array
+				array[count + 1] = temp; //the current array becomes the next array
+				swap = true;//confirm we swap the numbers
+			}
+		}
+	} while (swap);
+}
+
+void SectionArray(int A[], int S)
+{
+	int StartScan, minIndex, minValue;
+
+	for (StartScan = 0; StartScan < (S - 1); StartScan++)//counting from 0 to size-1
+	{
+		minIndex = StartScan;//set minIndex to startscan
+		minValue = A[StartScan];//set minValue to current array
+		for (int index = StartScan + 1; index < S; index++)//counting from startscan+1 to size
+		{
+			if (A[index] < minValue)//if current array is less than the minvalue
+			{
+				minValue = A[index];//set minvalue to current array
+				minIndex = index;//hold minIndex to index
+			}
+		}
+		A[minIndex] = A[StartScan];//set array of the min indec to array of startscan *swap*
+		A[StartScan] = minValue;//set array of startscan to minValue *swap*
+	}
+}
+void showArray(int Arr[], int s, ofstream& Outfile)
+{
+	for (int i = 0; i < s; i++)//counting from 0 to Size
+		Outfile << Arr[i] << " ";//print array values to file
+	Outfile << endl;
+}
