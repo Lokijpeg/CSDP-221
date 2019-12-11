@@ -1,0 +1,86 @@
+/*This program will identify the pythagorean triples
+and reduce the dublicate values*/
+
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <fstream>
+using namespace std;
+
+//function identify
+bool Identify(int , int , int );//This function will recieve the numbers to determine if the 3 numbers are
+								// Pythagorean triples if (a^2)+(b^2)=c^2, then its true. if not it's false 
+
+int main()
+{
+	const int SIZE = 100;//initialize size of array
+	int Triples[SIZE];//set array for triples for comparing 3 numbers to the previous numbers
+	int A, B, C;//A^2+B^2=C^2
+	int count = 0;//count cwill be assign to the array and count the subscript
+	bool confirm1;//function identity
+	
+	ofstream Py;//file where the numbers will be posted.
+	int g = 1;//counting the list
+	cout << "Hello my job is to give you all the pythagorean triples" << endl;//application intriduces itself
+	cout << "from {1,1,1} to {100,100,100}" << endl;
+	cout << "with no duplicates." << endl;
+
+	Py.open("Pythagorean.txt");//text files opens
+	for (int k = 0; k < SIZE; k++)//First the array need to be initialized to zero so the duplicate function have numbers to compare
+	{
+		Triples[k] = 0;
+	}
+
+	//This block will repeatedly add 1 to value A,B, and C until it reaches to 100
+	for (int value = 1; value <= SIZE; value++)//increment int A
+	{
+		A = value;
+		for (int val = 1; val <= SIZE; val++)//increment int B
+		{
+			B = val;
+			for (int v = 1; v <= SIZE; v++)//Increment int C
+			{
+				C = v;
+				confirm1 = Identify(A, B, C);
+			
+				if (confirm1==true )//if A,B,C are pythagorean triples and not duplicates, assign the following values in the array.*[A][B][C]*repeat
+				{
+					Triples[count] = C;
+					count++;
+					//since you can't add a subscript greater then 1, I've add 3 to c so the C value can jump the array list by 3
+					if (Py)//Check if file is open
+					{
+						Py <<g<<".)"<< "{" << A << "," << B << "," << C << "}" << endl;//Display {A,B,C} in file
+						g++;
+					}
+					else//if not this will display this message and end the application
+					{
+						cout << "There is an error in the file";
+						return 0;
+					}
+				}
+			}
+		}
+	}
+	Py.close();//close the text file
+	cout << "All Pythagorean triples are saved in a file."<<endl;//display the conclusion of the application
+	cout << "Check on this programs file.";
+
+	return 0;
+}
+
+bool Identify( int  a, int  b, int  c)//Algorithhm of the identify function
+{
+	int pyIdentityA = pow(a, 2.0) + pow(b, 2.0);//part 1 of pythagorean theroem
+	int pyIdentityB = pow(c, 2.0);//part 2 of pythagorean theroem
+
+	if (a > 0 && b > 0 && c > 0)//if A,B, and C are positive compare the 
+	{
+		if (pyIdentityB==pyIdentityA&&a>b&&2*a*b)//If both parts of the theroem are true, then it returns true. else return false.
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
