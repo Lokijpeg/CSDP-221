@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+using namespace std;
+
+void printSentence(char [], int);//function to print sentence on screen
+
+int main()
+{
+	ifstream infile;//declare the file
+	string S;
+	const int SIZE = 255;//the maximum characters are 255
+	int i = 0;
+	char sentence[SIZE];//the array where the sentence will be placed
+	char cha;//the character the program will read
+	
+	infile.open("Prob_7_realestate.txt");//opens file
+	while (infile)//Read the file and print the sentence
+	{
+		 getline(infile, S);
+		
+	}
+	infile.close();
+	cout << S << endl;
+	cout << "\nBecomes\n"<<endl;
+
+	infile.open("Prob_7_realestate.txt");
+	while (infile.get(cha))//while the gets the character of infile and stroe it to cha
+	{
+		if (isspace(cha))// if the character is a space, assign the character and the next character to the array
+		{
+			sentence[i] = cha;
+			i++;
+			infile.get(cha);
+			sentence[i] = cha;
+
+		}
+		else if (tolower(cha) == 'a' || tolower(cha) == 'e' || tolower(cha) == 'i' || tolower(cha) == 'o' || tolower(cha) == 'u')//if its a vowel, skip it.
+			continue;
+		else//If it's a generic character then keep it as well;
+			sentence[i] = cha;
+		i++;//update to the next array
+	}
+	infile.close();//close file
+
+	printSentence(sentence, i);//print the sentence and end the program
+	system("pause");
+	return 0;
+}
+
+
+
+void printSentence(char s[], int I)
+{
+	for (int j = 0; j < I; j++)
+	{
+		cout << s[j];
+	}
+	cout << endl;
+}
