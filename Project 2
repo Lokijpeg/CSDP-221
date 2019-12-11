@@ -1,0 +1,35 @@
+//This program ask the users to input a number 5 times.
+//the program will compare and assign the smallest and largest values of numbers that are listed.
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	const int SIZE = 5;
+	int num[SIZE];
+
+	int largest = 0 , smallest = 0;
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		cout << "Enter a number: ";
+		cin >> num[i];
+	}
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (largest < num[i])
+			largest = num[i];
+	}
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (smallest > num[i])
+			smallest = num[i];
+		
+	}
+
+	cout << "The largest value is " << largest << " and the smallest value is " << smallest;
+
+	return 0;
+}
