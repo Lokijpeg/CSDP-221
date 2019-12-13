@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	int index1, index2, index3, index4;
+	int count = 0, count2 = 0, temp = 0;
+	for (index1 = 0; index1 < 5; ++index1)
+	{
+		for (index2 = 0; index2 <= (9 - index1); index2++)
+		{
+			for (index3 = 0; index3 <= (9 - index1 - index2); index3++)
+			{
+				for (index4 = 0; index4 <= (9 - index1 - index2 - index3); index4++)
+				{
+					count++;
+					temp = (4 * index1 + 3 * index2 + 2 * index3 + index4);
+					if (temp = 17)
+					{
+						count2++
+							cout << count2 << ".) Box 4:" << index1 << " Box 3: " << index2 << " Box 2: " << index3 << " Box 1: " << index4 << endl;
+					}
+
+				}
+			}
+		}
+	}
+	cout << "It took " << count << " Iterations " << endl;
+	system("pause");
+	return 0;
+}
